@@ -1,4 +1,4 @@
-<html> 
+<html>
 <head>
 <meta charset="utf-8">
 <title>Display Webcam Stream</title>
@@ -11,7 +11,7 @@
   </div>
   <div class="text-center">
     <input type="checkbox" id="face" name="classifier" value="face" checked>
-    <label for="face">face</label> 
+    <label for="face">face</label>
     <input type="checkbox" id="TargaRussa" name="cascade" value="TargaRussa">
     <label for="TargaRussa">Targa Russa</label>
   </div>
@@ -36,7 +36,7 @@
 <script async src="https://huningxin.github.io/opencv.js/build/wasm/opencv.js"></script>    
 
 <style>
-canvas { 
+canvas {
   border: 1px solid black;
 }
 .invisible {
@@ -77,7 +77,7 @@ let detectTargaRussa = document.getElementById('TargaRussa');
 
 function startCamera() {
   if (streaming) return;
-  navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}, audio: false})     
+  navigator.mediaDevices.getUserMedia({video: {facingMode: "users"}, audio: false})     
     .then(function(s) {
     stream = s;
     video.srcObject = s;
@@ -86,6 +86,19 @@ function startCamera() {
     .catch(function(err) {
     console.log("An error occured! " + err);
   });
+  
+  function startCamera() {
+  defaultsOpts.video = { facingMode: shouldFaceUser ? 'user' : 'environment' }
+  navigator.mediaDevices.getUserMedia(defaultsOpts)
+    .then(function(s) {
+      stream  = s;
+      videoElm.srcObject = s;
+      videoElm.play();
+    })
+    .catch(function(err) {
+      console.log(err)
+    });
+}
 
   video.addEventListener("canplay", function(ev){
     if (!streaming) {
@@ -97,7 +110,7 @@ function startCamera() {
       canvasOutput.height = videoHeight;
       streaming = true;
     }
-    startVideoProcessing(); 
+    startVideoProcessing();
   }, false);
 }
 
@@ -170,7 +183,7 @@ function processVideo() {
         TargaRussaClassifier.detectMultiScale(TargaRussaMat, TargaRussaVect);
         for (let i = 0; i < TargaRussaVect.size(); i++) {
           let TargaRussa = TargaRussaVect.get(i);
-          TargaRussaDoppia.push(new cv.Rect(face.x + TargaRussa.x, face.y + TargaRussa.y, 100, TargaRussa.height));
+          TargaRussaDoppia.push(new cv.Rect(face.x + TargaRussa.x, face.y + TargaRussa.y, TargaRussa.width, TargaRussa.height));
         }
         TargaRussaMat.delete();
         TargaRussaVect.delete();
