@@ -77,7 +77,7 @@ let detectTargaRussa = document.getElementById('TargaRussa');
 
 function startCamera() {
   if (streaming) return;
-  navigator.mediaDevices.getUserMedia({video: {facingMode: "user"}, audio: false})     
+  navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}, audio: false})     
     .then(function(s) {
     stream = s;
     video.srcObject = s;
