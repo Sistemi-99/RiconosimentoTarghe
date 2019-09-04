@@ -27,7 +27,7 @@
   var Module = {
      wasmBinaryFile: 'https://huningxin.github.io/opencv.js/build/wasm/opencv_js.wasm',
     preRun: [function() {
-      Module.FS_createPreloadedFile('/', 'plate.xml', 'https://raw.githubusercontent.com/Sistemi-99/plate/master/plate.xml', true, false);
+      Module.FS_createPreloadedFile('/', 'plate.xml', 'https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_russian_plate_number.xml', true, false);
       Module.FS_createPreloadedFile('/', 'haarcascade_frontalface_default.xml', 'https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml', true, false);
           }], 
     _main: function() {opencvIsReady();}
